@@ -267,10 +267,52 @@ def is_no(one_more_input):
     # ==================================
     return result
 
+def get_user_input():
+    """
+    올바른 입력값이 들어올때까지 반복해서 입력값을 받습니다.
+    입력값이 0 일때는 False 를 리턴합니다
+    """
+    is_valid = False
+    while not is_valid:
+        user_input = input('Input guess number : ')
+        # 입력값이 0이면 종료
+        if user_input == '0':
+            return False
+        is_valid = is_validated_number(user_input)
+        if not is_valid:
+            print("Wrong Input, Input again")
+    return user_input
+
+def get_one_more_input():
+    """
+    올바른 입력값이 들어올때까지 반복해서 재시도 여부 입력값을 받습니다.
+    입력값이 0 일때는 False 를 리턴합니다
+    """
+    result = None
+    is_valid = False
+    while not is_valid:
+        one_more_input = input("You win, one more(Y/N)?")
+        # 입력값이 0이면 종료
+        if one_more_input == '0':
+            result = False
+            break
+
+        is_valid = is_yes(one_more_input)
+        if is_valid:
+            result = True
+            break
+        
+        is_valid = is_no(one_more_input)
+        if is_valid:
+            result = False
+        else:
+            print("Wrong Input, Input again")
+    return result
+
 
 def main():
     print("Play Baseball")
-    # user_input = 999
+    user_input = 999
     random_number = str(get_not_duplicated_three_digit_number())
     print("Random Number is : ", random_number)
     # ===Modify codes below=============
@@ -279,12 +321,9 @@ def main():
     while is_again:
 
         # 입력값 검사
-        is_valid = False
-        while not is_valid:
-            user_input = input('Input guess number : ')
-            is_valid = is_validated_number(user_input)
-            if not is_valid:
-                print("Wrong Input, Input again")
+        user_input = get_user_input()
+        if not user_input:
+            break
 
         # Strike , Ball 결과출력
         score = get_strikes_or_ball(user_input, random_number)
@@ -292,18 +331,7 @@ def main():
 
         # Strike 3일 때 재시도 결정
         if score[0] == 3:
-            is_valid = False
-            while not is_valid:
-                one_more_input = input("You win, one more(Y/N)?")
-                is_valid = is_yes(one_more_input)
-                if is_valid:
-                    break
-                
-                is_valid = is_no(one_more_input)
-                if is_valid:
-                    is_again = False
-                else:
-                    print("Wrong Input, Input again")
+            is_again = get_one_more_input()
             
     # ==================================
     print("Thank you for using this program")
