@@ -32,12 +32,11 @@ def is_digit(user_input_number):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     result = False
-    if len(user_input_number) == 3:
-        for char in user_input_number:
-            if not char.isdigit():
-                break
-        else:
-            result = True
+    for char in user_input_number:
+        if not char.isdigit():
+            break
+    else:
+        result = True
     # ==================================
     return result
 
