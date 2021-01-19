@@ -270,14 +270,15 @@ def is_no(one_more_input):
 def get_user_input():
     """
     올바른 입력값이 들어올때까지 반복해서 입력값을 받습니다.
-    입력값이 0 일때는 False 를 리턴합니다
+    옵바른 입력값을 리턴합니다.
     """
     is_valid = False
     while not is_valid:
         user_input = input('Input guess number : ')
         # 입력값이 0이면 종료
         if user_input == '0':
-            return False
+            exit()
+            
         is_valid = is_validated_number(user_input)
         if not is_valid:
             print("Wrong Input, Input again")
@@ -286,7 +287,7 @@ def get_user_input():
 def get_one_more_input():
     """
     올바른 입력값이 들어올때까지 반복해서 재시도 여부 입력값을 받습니다.
-    입력값이 0 일때는 False 를 리턴합니다
+    반복해야하면 True 리턴, 종료시 False를 리턴
     """
     result = None
     is_valid = False
@@ -294,8 +295,7 @@ def get_one_more_input():
         one_more_input = input("You win, one more(Y/N)?")
         # 입력값이 0이면 종료
         if one_more_input == '0':
-            result = False
-            break
+            exit()
 
         is_valid = is_yes(one_more_input)
         if is_valid:
@@ -320,10 +320,8 @@ def main():
     is_again = True
     while is_again:
 
-        # 입력값 검사
+        # 올바른 입력값 받기
         user_input = get_user_input()
-        if not user_input:
-            break
 
         # Strike , Ball 결과출력
         score = get_strikes_or_ball(user_input, random_number)
